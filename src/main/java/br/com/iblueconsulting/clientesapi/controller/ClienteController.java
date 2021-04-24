@@ -3,6 +3,8 @@ package br.com.iblueconsulting.clientesapi.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,20 +32,30 @@ public class ClienteController {
 	@Autowired
 	private ClienteService clienteService;
 	
-    @Operation(summary = "Retorna a lista de clientes", description = "Name search by %name% format", tags = { "todos_clientes" })
+    @Operation(summary = "Retorna a lista de clientes", description = "Metodo sem parametros que retorna a lista de todos os clientes", tags = { "todos_clientes" })
 	@GetMapping("/")
 	public List<Cliente> getAllClientes(){
 		return clienteService.getAllClientes();
 	}
 	
+    @Operation(summary = "Retorna a busca de um cliente pelo email.", description = "Metodo que recebe o email e retorna o cliente, caso exista", tags = { "busca_por_email" })
 	@GetMapping("/email/{email}")
 	public Cliente getByEmail(@PathVariable("email") String email){
 		return clienteService.getByEmail(email);	
 	}
 	
+    @Operation(summary = "Salva o cliente.", description = "Metodo que recebe o ClienteDao e retorna o cliente ou erro. ", tags = { "salva_cliente" })
 	@PostMapping
-	public ClienteDao saveCliente(@RequestBody ClienteDao cliente){
-		return clienteService.saveCliente(cliente);		
+	public ResponseEntity<ClienteDao> saveCliente(@RequestBody ClienteDao cliente){
+    	
+    	try {
+    		ClienteDao c = clienteService.saveCliente(cliente);
+    		return ResponseEntity.ok(c);
+    	//} catch (JsonProcessingException e) {
+    	//	return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    	} catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+	    }		
 	}
 	
 	@PutMapping
@@ -52,7 +64,7 @@ public class ClienteController {
 	}
 	
 	@DeleteMapping
-	public ClienteDao deleteCliente(@RequestBody ClienteDao cliente){
+	public String deleteCliente(@RequestBody ClienteDao cliente){
 		return clienteService.deleteCliente(cliente);	
 	}
 

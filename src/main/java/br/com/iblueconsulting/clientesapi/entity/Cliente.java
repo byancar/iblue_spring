@@ -2,6 +2,8 @@ package br.com.iblueconsulting.clientesapi.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
@@ -9,6 +11,7 @@ import javax.validation.constraints.NotNull;
 public class Cliente {
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     
     private String nome;
@@ -23,24 +26,23 @@ public class Cliente {
     
     private String cep;
     private String tipo_logradouro;
-    private String lougradouro;
+    private String logradouro;
     private Integer numero;
     private String complemento;
     private String bairro;
     private String cidade;
     private String estado;
     
-    public Cliente() {}
-	public Cliente(Long id, String nome, String cpf, String email, String cep, String tipo_logradouro,
+	public Cliente( String nome, String cpf, String email, String cep, String tipo_logradouro,
 			String lougradouro, Integer numero, String complemento, String bairro, String cidade, String estado) {
 		super();
-		this.id = id;
+		
 		this.nome = nome;
 		this.cpf = cpf;
 		this.email = email;
 		this.cep = cep;
 		this.tipo_logradouro = tipo_logradouro;
-		this.lougradouro = lougradouro;
+		this.logradouro = lougradouro;
 		this.numero = numero;
 		this.complemento = complemento;
 		this.bairro = bairro;
@@ -48,7 +50,7 @@ public class Cliente {
 		this.estado = estado;
 	}
 
-
+	public Cliente() {}
 
 	public Long getId() {
 		return id;
@@ -98,12 +100,12 @@ public class Cliente {
 		this.tipo_logradouro = tipo_logradouro;
 	}
 
-	public String getLougradouro() {
-		return lougradouro;
+	public String getLogradouro() {
+		return logradouro;
 	}
 
-	public void setLougradouro(String lougradouro) {
-		this.lougradouro = lougradouro;
+	public void setLogradouro(String lougradouro) {
+		this.logradouro = lougradouro;
 	}
 
 	public Integer getNumero() {
@@ -158,7 +160,7 @@ public class Cliente {
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((estado == null) ? 0 : estado.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((lougradouro == null) ? 0 : lougradouro.hashCode());
+		result = prime * result + ((logradouro == null) ? 0 : logradouro.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		result = prime * result + ((numero == null) ? 0 : numero.hashCode());
 		result = prime * result + ((tipo_logradouro == null) ? 0 : tipo_logradouro.hashCode());
@@ -168,7 +170,7 @@ public class Cliente {
 	@Override
 	public String toString() {
 		return "Cliente {id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", email=" + email + ", cep=" + cep
-				+ ", tipo_logradouro=" + tipo_logradouro + ", lougradouro=" + lougradouro + ", numero=" + numero
+				+ ", tipo_logradouro=" + tipo_logradouro + ", lougradouro=" + logradouro + ", numero=" + numero
 				+ ", complemento=" + complemento + ", bairro=" + bairro + ", cidade=" + cidade + ", estado=" + estado
 				+ "}";
 	}
