@@ -44,25 +44,29 @@ public class ClienteController {
 		return clienteService.getByEmail(email);	
 	}
 	
-    @Operation(summary = "Salva o cliente.", description = "Metodo que recebe o ClienteDao e retorna o cliente ou erro. ", tags = { "salva_cliente" })
+    @Operation(summary = "Salva o cliente.", description = "Metodo que recebe o ClienteDao e retorna o cliente salvo ou erro. ", tags = { "salva_cliente" })
 	@PostMapping
-	public ResponseEntity<ClienteDao> saveCliente(@RequestBody ClienteDao cliente){
-    	
+	public ResponseEntity<ClienteDao> saveCliente(@RequestBody ClienteDao cliente){	
     	try {
     		ClienteDao c = clienteService.saveCliente(cliente);
     		return ResponseEntity.ok(c);
-    	//} catch (JsonProcessingException e) {
-    	//	return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     	} catch (Exception e) {
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	    }		
 	}
 	
+    @Operation(summary = "Atualiza o cliente.", description = "Metodo que recebe o ClienteDao e retorna o cliente atualizado ou erro. ", tags = { "atualiza_cliente" })
 	@PutMapping
-	public ClienteDao updateCliente(@RequestBody ClienteDao cliente){
-		return clienteService.updateCliente(cliente);		
+	public ResponseEntity<ClienteDao> updateCliente(@RequestBody ClienteDao cliente){
+    	try {
+    		ClienteDao c = clienteService.updateCliente(cliente);
+    		return ResponseEntity.ok(c);
+    	} catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+	    }
 	}
 	
+    @Operation(summary = "Deleta o cliente.", description = "Metodo que recebe o ClienteDao e deleta o cliente caso ele existe. ", tags = { "exclui_cliente" })
 	@DeleteMapping
 	public String deleteCliente(@RequestBody ClienteDao cliente){
 		return clienteService.deleteCliente(cliente);	
